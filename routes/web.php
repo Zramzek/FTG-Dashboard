@@ -1,31 +1,16 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GameController;
+use App\Http\Controllers\GameSyncController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Dashboard', [
-        GameController::class, 'index'
-    ])->name('dashboard');
-
-    // return Inertia::render('Welcome', [
-    //     'canLogin' => Route::has('login'),
-    //     'canRegister' => Route::has('register'),
-    //     'laravelVersion' => Application::VERSION,
-    //     'phpVersion' => PHP_VERSION,
-    // ]);
-});
-
-Route::get('/manageData', function(){
-    return Inertia::render('ManageData');
-})->name('manageData');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/manage', [GameController::class, 'index'])->name('manage');
+Route::post('/games', [GameController::class, 'store'])->name('games.store');
+Route::put('/games/{game}', [GameController::class, 'update'])->name('games.update');
+Route::delete('/games/{game}', [GameController::class, 'destroy'])->name('games.destroy');
+Route::post('/sync', [GameSyncController::class, 'sync'])->name('sync');
+Route::get('/sync/status', [GameSyncController::class, 'lastSync'])->name('sync.status');
 
 require __DIR__.'/auth.php';

@@ -13,17 +13,22 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('api_id')->unique();
             $table->string('title');
             $table->string('thumbnail');
-            $table->string('short_description');
+            $table->text('short_description');
             $table->string('game_url');
-            $table->enum('genre', ['mmorpg', 'shooter', 'strategy', 'moba', 'racing', 'sports', 'social', 'sandbox', 'open-world', 'survival', 'pvp', 'pve', 'pixel', 'voxel', 'zombie', 'turn-based', 'first-person', 'third-Person', 'top-down', 'tank', 'space', 'sailing', 'side-scroller', 'superhero', 'permadeath', 'card', 'battle-royale', 'mmo', 'mmofps', 'mmotps', '3d', '2d', 'anime', 'fantasy', 'sci-fi', 'fighting', 'action-rpg', 'action', 'military', 'martial-arts', 'flight', 'low-spec', 'tower-defense', 'horror', 'mmorts']);
-            $table->enum('platform', ['PC', 'Mobile', 'Console']);
+            $table->string('genre');
+            $table->enum('platform', ['PC (Windows)', 'Web Browser']);
             $table->string('publisher');
             $table->string('developer');
             $table->string('release_date');
             $table->string('freetogame_profile_url');
             $table->timestamps();
+
+            $table->index('genre');
+            $table->index('platform');
+            $table->index('release_date');
         });
     }
 

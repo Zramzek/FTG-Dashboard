@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Games extends Model
 {
     protected $fillable = [
+        'api_id',
         'title',
         'thumbnail',
         'short_description',
@@ -17,5 +18,9 @@ class Games extends Model
         'developer',
         'release_date',
         'freetogame_profile_url',
+    ];
+
+    protected $casts = [
+        'api_id' => 'integer',
     ];
 }
